@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class CanvasWelcomeController : MonoBehaviour
 {
+    public Canvas CanvasWelcome;
+    public Canvas CanvasGame;
 
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
 
     public void B_OnHandleButtonStart(){
-        // canvasWelcome.gameObject.SetActive(false);
-        // canvasGame.gameObject.SetActive(true);
+        CanvasWelcome.gameObject.SetActive(false);
+        CanvasGame.gameObject.SetActive(true);
     }
 }

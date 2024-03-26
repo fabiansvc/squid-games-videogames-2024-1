@@ -18,10 +18,9 @@ public class CanvasGameController : MonoBehaviour
         
     }
 
-    public void OnHandleButtonExit()
+    public void B_OnHandleButtonExit()
     {
-        Debug.Log("Exit");
-        // canvasGame.gameObject.SetActive(false);
-        // canvasWelcome.gameObject.SetActive(true);
+        CanvasGame.gameObject.SetActive(false);
+        CanvasWelcome.gameObject.SetActive(true);
     }
 }
