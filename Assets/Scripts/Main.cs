@@ -9,20 +9,20 @@ public class Main : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.visible = false;
+        //Cursor.visible = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        // float horizontalInput = Input.GetAxis("Horizontal");
+        // float verticalInput = Input.GetAxis("Vertical");
 
-        Vector3 moveDirection = new Vector3(horizontalInput, 0, verticalInput).normalized;
-        transform.Translate(moveDirection * speed * Time.deltaTime);
+        // Vector3 moveDirection = new Vector3(horizontalInput, 0, verticalInput).normalized;
+        // transform.Translate(moveDirection * speed * Time.deltaTime);
 
-        float mouseX = Input.GetAxis("Mouse X");
-        transform.Rotate(Vector3.up * mouseX);
+        // float mouseX = Input.GetAxis("Mouse X");
+        // transform.Rotate(Vector3.up * mouseX);
     }
 
 }
