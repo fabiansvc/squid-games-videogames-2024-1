@@ -7,6 +7,7 @@ public class Game : MonoBehaviour
     private static Game instance;
     private float speed = 2f;
     private bool isStarted = false;   
+
     void Awake()
     {
         instance = this;

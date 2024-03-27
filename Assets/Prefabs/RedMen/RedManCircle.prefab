@@ -307,5 +307,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9b97bdd2b1144b54f8999946821cab4c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7031851750097304646}
   m_SourcePrefab: {fileID: 100100000, guid: 9b97bdd2b1144b54f8999946821cab4c, type: 3}
+--- !u!4 &2762206127266063919 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9b97bdd2b1144b54f8999946821cab4c, type: 3}
+  m_PrefabInstance: {fileID: 2440927547423490500}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3251180541531765909 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9b97bdd2b1144b54f8999946821cab4c, type: 3}
+  m_PrefabInstance: {fileID: 2440927547423490500}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-7031851750097304646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3251180541531765909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c26125de054e5eb4aa293fc0f6292e3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RedManCircleTransform: {fileID: 2762206127266063919}
