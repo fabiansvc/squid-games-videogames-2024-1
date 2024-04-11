@@ -28,6 +28,7 @@ public class CanvasWelcomeController : MonoBehaviour
         CanvasWelcome.gameObject.SetActive(false);
         CanvasGame.gameObject.SetActive(true);
         Game.GetInstance().SetIsStarted(true);
+        Game.GetInstance().StartGame();
     }
 
     public static CanvasWelcomeController GetInstance()
