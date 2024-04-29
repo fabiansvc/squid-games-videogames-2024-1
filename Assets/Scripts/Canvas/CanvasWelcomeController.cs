@@ -13,16 +13,6 @@ public class CanvasWelcomeController : MonoBehaviour
         instance = this;
     }
 
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
-
     public void B_OnHandleButtonStart()
     {
         CanvasWelcome.gameObject.SetActive(false);
