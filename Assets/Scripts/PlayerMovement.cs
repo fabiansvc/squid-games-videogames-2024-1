@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
-{
+{   
     #region Public_Variables
     [Header("Movement")]
-    public float accelerationSpeed;
-    public float descelerationSpeed;
+    public float acelerationSpeed;
+    public float desacelerationSpeed;
     public float maxSpeed;
 
     [Header("Jump")]
     public float jumpForce;
 
-    [Header("Raycast - Ground")]
+    [Header("Raycast — Ground")] 
     public LayerMask groundMask;
     public float rayLength;
     #endregion
@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal;
     private float vertical;
     #endregion
-
+    
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -49,58 +49,48 @@ public class PlayerMovement : MonoBehaviour
         Jump();
     }
 
-    void InputPlayer()
-    {
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
-    }
-
     void Movement()
-    {
+    {   
+        // Store the velocity
         horizontalMovement = new Vector2(rb.velocity.x, rb.velocity.z);
-
-        // Limit the velocity
-        if (horizontalMovement.magnitude > maxSpeed)
+        
+        if(horizontalMovement.magnitude > maxSpeed)
         {
+            // Limit the velocity to the max speed
             horizontalMovement = horizontalMovement.normalized;
             horizontalMovement *= maxSpeed;
         }
 
         rb.velocity = new Vector3(horizontalMovement.x, rb.velocity.y, horizontalMovement.y);
 
-        rb.velocity = Vector3.SmoothDamp(
-            rb.velocity,
-            new Vector3(0, rb.velocity.y, 0),
-            ref slowDown,
-            descelerationSpeed
-            );
-
-        if (isGrounded) 
+        if(isGrounded)
         {
+            rb.velocity = Vector3.SmoothDamp(
+                   rb.velocity, 
+                   new Vector3(0, rb.velocity.y, 0), 
+                   ref slowDown, 
+                   desacelerationSpeed);
+
             rb.AddRelativeForce(
-                    horizontal * accelerationSpeed * Time.deltaTime,
-                    0,
-                    vertical * accelerationSpeed * Time.deltaTime
-                );
+                    horizontal * acelerationSpeed * Time.deltaTime, // Move in the X axis
+                    0, // Don't move in the Y axis
+                    vertical * acelerationSpeed * Time.deltaTime); // Move in the Z axis
         }
         else
         {
             rb.AddRelativeForce(
-            horizontal * accelerationSpeed / 2 * Time.deltaTime,
-            0,
-            vertical * accelerationSpeed / 2 * Time.deltaTime
-            );
+                   horizontal * acelerationSpeed / 2 * Time.deltaTime, // Move in the X axis
+                   0, // Don't move in the Y axis
+                   vertical * acelerationSpeed / 2 * Time.deltaTime); // Move in the Z axis
         }
     }
 
     void JumpPressed()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            jumpPressed = true;
-        }
-
-
+       if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+       {
+          jumpPressed = true;
+       }
     }
 
     void Jump()
@@ -112,13 +102,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void InputPlayer()
+    {
+        // AD, if player press A or D, the value will be -1 or 1, if not the value will be 0
+        horizontal = Input.GetAxis("Horizontal");
+        // WS, if player press W or S, the value will be -1 or 1, if not the value will be 0
+        vertical = Input.GetAxis("Vertical");
+    }   
+
     void IsGrounded()
     {
         // Ray configuration
         ray.origin = transform.position;
         ray.direction = -transform.up;
-        
 
+        // Raycast configuration with the selective layer
         if(Physics.Raycast(ray, out hit, rayLength, groundMask))
         {
             isGrounded = true;
@@ -129,5 +127,4 @@ public class PlayerMovement : MonoBehaviour
         }
         Debug.DrawRay(ray.origin, ray.direction * rayLength, Color.red);
     }
-
 }
