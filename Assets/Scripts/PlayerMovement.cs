@@ -39,12 +39,14 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         InputPlayer();
+        JumpPressed();
     }
 
     void FixedUpdate()
     {
         IsGrounded();
         Movement();
+        Jump();
     }
 
     void InputPlayer()
@@ -57,23 +59,24 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalMovement = new Vector2(rb.velocity.x, rb.velocity.z);
 
+        // Limit the velocity
+        if (horizontalMovement.magnitude > maxSpeed)
+        {
+            horizontalMovement = horizontalMovement.normalized;
+            horizontalMovement *= maxSpeed;
+        }
+
+        rb.velocity = new Vector3(horizontalMovement.x, rb.velocity.y, horizontalMovement.y);
+
+        rb.velocity = Vector3.SmoothDamp(
+            rb.velocity,
+            new Vector3(0, rb.velocity.y, 0),
+            ref slowDown,
+            descelerationSpeed
+            );
+
         if (isGrounded) 
         {
-            rb.velocity = Vector3.SmoothDamp(
-                rb.velocity,
-                new Vector3(0, rb.velocity.y, 0),
-                ref slowDown,
-                descelerationSpeed
-                );
-            // Limit the velocity
-            if(horizontalMovement.magnitude > maxSpeed)
-            {
-                horizontalMovement = horizontalMovement.normalized;
-                horizontalMovement *= maxSpeed;
-            }
-
-            rb.velocity = new Vector3(horizontalMovement.x, rb.velocity.y, horizontalMovement.y);
-
             rb.AddRelativeForce(
                     horizontal * accelerationSpeed * Time.deltaTime,
                     0,
@@ -90,11 +93,31 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void JumpPressed()
+    {
+        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            jumpPressed = true;
+        }
+
+
+    }
+
+    void Jump()
+    {
+        if(jumpPressed)
+        {
+            jumpPressed = false;
+            rb.AddRelativeForce(Vector3.up * jumpForce);
+        }
+    }
+
     void IsGrounded()
     {
         // Ray configuration
         ray.origin = transform.position;
         ray.direction = -transform.up;
+        
 
         if(Physics.Raycast(ray, out hit, rayLength, groundMask))
         {
