@@ -16,6 +16,12 @@ public class PlayerMovement : MonoBehaviour
     [Header("Raycast — Ground")] 
     public LayerMask groundMask;
     public float rayLength;
+
+    [Header("Animator")]
+    public Animator animator;
+
+    [Header("Audio")]
+    public AudioSource walkAudioSource;
     #endregion
 
     #region Private_Variables
@@ -29,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal;
     private float vertical;
     #endregion
-    
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -75,6 +81,31 @@ public class PlayerMovement : MonoBehaviour
                     horizontal * acelerationSpeed * Time.deltaTime, // Move in the X axis
                     0, // Don't move in the Y axis
                     vertical * acelerationSpeed * Time.deltaTime); // Move in the Z axis
+
+            if (horizontal != 0 || vertical != 0)
+            {
+                animator.Play("Running");
+
+                if (!walkAudioSource.isPlaying)
+                {
+                    walkAudioSource.Play();
+                }
+
+                if (walkAudioSource.mute)
+                {
+                    walkAudioSource.mute = false;
+                }
+
+            }
+            else
+            {
+                animator.Play("Idle");
+
+                if (!walkAudioSource.mute)
+                {
+                    walkAudioSource.mute = true;
+                }
+            }
         }
         else
         {
